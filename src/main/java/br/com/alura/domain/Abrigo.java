@@ -1,11 +1,14 @@
 package br.com.alura.domain;
 
+import java.util.List;
+
 public class Abrigo {
 
     private long id;
     private String nome;
     private String telefone;
     private String email;
+    private List<Pet> pets;
 
     
     public long getId() {
@@ -40,6 +43,10 @@ public class Abrigo {
         this.email = email;
     }
 
+    public List<Pet> getPets() {
+        return pets;
+    }
+    
     public Abrigo() {
     }
 

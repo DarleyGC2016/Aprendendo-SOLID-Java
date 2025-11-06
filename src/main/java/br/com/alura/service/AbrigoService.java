@@ -51,7 +51,9 @@ public class AbrigoService {
                 .toList();
         System.out.println("Abrigos cadastrados:");
         abrigosList.stream().forEach(abrigo -> {
-            System.out.println(abrigo.getId() + " - " + abrigo.getNome());
+            System.out.println(abrigo.getId() + " - " + abrigo.getNome() + " - " + abrigo.getTelefone() + " - " + abrigo.getEmail());
+            System.out.println("Pets disponíveis para adoção: ");
+            abrigo.getPets().forEach(System.out::println);
         });
     }
 }

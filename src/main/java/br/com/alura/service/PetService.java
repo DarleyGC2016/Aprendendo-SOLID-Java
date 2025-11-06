@@ -9,7 +9,10 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+
 import br.com.alura.client.ClientHttpConfig;
+import br.com.alura.client.ResponseHttpMesage;
 import br.com.alura.domain.Pet;
 
 public class PetService {
@@ -49,16 +52,13 @@ public class PetService {
                     pet);
             int statusCode = response.statusCode();
             String responseBody = response.body();
-            if (statusCode == 200) {
-                System.out.println("Pet cadastrado com sucesso: " + nome);
-            } else if (statusCode == 404) {
-                System.out.println("Id ou nome do abrigo não encontado!");
-                break;
-            } else if (statusCode == 400 || statusCode == 500) {
-                System.out.println("Erro ao cadastrar o pet: " + nome);
-                System.out.println(responseBody);
-                break;
-            }
+            ResponseHttpMesage
+                    .printMessage(statusCode,
+                            responseBody,
+                            "Pet cadastrado com sucesso: " + nome,
+                            "Id ou nome do abrigo não encontado!",
+                            "Erro ao cadastrar o pet: " + nome);
+
         }
         reader.close();
     }
@@ -71,11 +71,14 @@ public class PetService {
                 .requestGet("http://localhost:8080/abrigos/" + idOuNome + "/pets");
         int statusCode = response
                 .statusCode();
-        if (statusCode == 404 || statusCode == 500) {
-            System.out.println("ID ou nome não cadastrado!");
-        }
+        ResponseHttpMesage.printMessage(statusCode, "ID ou nome não cadastrado!");
+ 
 
         String responseBody = response.body();
+            if (responseBody.isEmpty()) {
+                System.out.println("Nenhum pet cadastrado para este abrigo.");
+                return;
+            }
 
         List<Pet> pets = new ObjectMapper()
                 .readValue(responseBody, new TypeReference<List<Pet>>() {

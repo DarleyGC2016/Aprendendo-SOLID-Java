@@ -65,6 +65,9 @@ public class Pet {
         this.peso = peso;
     }
 
+    public Pet() {
+    }
+
     public Pet(String tipo, String nome, String raca, int idade, String cor, Float peso) {
         setTipo(tipo);
         setNome(nome);
@@ -76,8 +79,7 @@ public class Pet {
 
     @Override
     public String toString() {
-        return "Pet [tipo=" + tipo + ", nome=" + nome + ", raca=" + raca + ", idade=" + idade + ", cor=" + cor
-                + ", peso=" + peso + "]";
+        return  getNome() +" "+  getRaca() +" "+ getIdade() +" "+  getCor() +" "+ getPeso();
     }
 
     
